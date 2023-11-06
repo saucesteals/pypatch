@@ -11,15 +11,49 @@
 
 pypatch includes:
 
-- [Python injector](https://github.com/saucesteals/pypatch/blob/main/pypatch) to run arbitrary code with any python3x.dll
+- [PyPatch injection executor](https://github.com/saucesteals/pypatch/blob/main/cmd/injector) to run a pre-packed python program and inject code at any time (before startup/after startup)
+
+- [Python injector library](https://github.com/saucesteals/pypatch/blob/main/pypatch) to run arbitrary code with any python3x.dll
+
 - [Process injector library](https://github.com/saucesteals/pypatch/blob/main/inject) to inject dlls
-- [Injector utility](https://github.com/saucesteals/pypatch/blob/main/cmd/injector) to simplify the entire process
 
 ## Usage
 
 - Write the payload you want to inject in `inject.py`
 - Compile a DLL with the payload with `make dll`
 - Compile an injector (in `cmd/injector`) with your `program` and `dll` paths
+
+## Example
+
+### `program.py` with **pyinstaller**
+
+```py
+import time
+
+def main():
+  while True:
+    print("Working")
+    time.sleep(1)
+
+if __name__ == "__main__":
+  main()
+```
+
+<img src="./assets/program.png" alt="logo" height="100px" />
+
+---
+
+### `inject.py` with pypatch executor
+
+```py
+import os
+print("Hello from inject.py!")
+print = lambda *args, **kwargs: os.write(1, b"Boo!\n")
+```
+
+<img src="./assets/injector.png" alt="logo" height="200px" />
+
+---
 
 ## Contributing
 
