@@ -1,10 +1,7 @@
 <div align="center">
 
 <img src="./assets/logo.png" alt="logo" height="100px" />
-<h1 align="center">
-
-PyPatch
-
+<h1 align="center">PyPatch</h1>
 <h3>Inject arbitrary code into any running python interpreter</h3>
 </div>
 
