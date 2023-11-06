@@ -41,7 +41,7 @@ func New(ctx context.Context) (*Python, error) {
 	return p, nil
 }
 
-// Inject injects python code into the cureent python handle
+// Inject injects python code into the current python handle
 func (p *Python) Inject(code string) error {
 	state, err := p.gilStateEnsure()
 	if err != nil {
