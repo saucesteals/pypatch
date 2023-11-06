@@ -3,6 +3,7 @@
 <img src="./assets/logo.png" alt="logo" height="100px" />
 <h1 align="center">PyPatch</h1>
 <h3>Inject arbitrary code into any running python interpreter</h3>
+<h4>Supports all configurations of PyInstaller and PyArmor</h4>
 </div>
 
 ---
@@ -25,7 +26,7 @@ pypatch includes:
 
 ## Example
 
-### `program.py` with **pyinstaller**
+### `program.py` obfuscated with **pyarmor 8.4.2** and packed with **pyinstaller 8.4.2**
 
 ```py
 import time
