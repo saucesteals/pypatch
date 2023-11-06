@@ -26,7 +26,7 @@ pypatch includes:
 
 ## Example
 
-### `program.py` obfuscated with **pyarmor 8.4.2** and packed with **pyinstaller 8.4.2**
+### `program.py` obfuscated with **pyarmor 8.4.2** and packed with **pyinstaller 6.1.0**
 
 ```py
 import time
