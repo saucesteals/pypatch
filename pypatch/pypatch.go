@@ -10,8 +10,9 @@ import (
 	"golang.org/x/sys/windows"
 )
 
-type GILState uintptr
+type gilState uintptr
 
+// Python is a wrapper around a python handle
 type Python struct {
 	h windows.Handle
 
@@ -25,6 +26,7 @@ type Python struct {
 	procGILStateRelease uintptr
 }
 
+// New finds the first python module loaded into the current process and returns a wrapped handle to it
 func New(ctx context.Context) (*Python, error) {
 	h, err := findPython(ctx)
 	if err != nil {
@@ -39,19 +41,20 @@ func New(ctx context.Context) (*Python, error) {
 	return p, nil
 }
 
+// Inject injects python code into the cureent python handle
 func (p *Python) Inject(code string) error {
-	state, err := p.GILStateEnsure()
+	state, err := p.gilStateEnsure()
 	if err != nil {
 		return err
 	}
-	if err := p.RunSimpleString(code); err != nil {
+	if err := p.runSimpleString(code); err != nil {
 		return err
 	}
 
-	return p.GILStateRelease(state)
+	return p.gilStateRelease(state)
 }
 
-func (p *Python) RunSimpleString(code string) error {
+func (p *Python) runSimpleString(code string) error {
 	codeBytes, err := windows.BytePtrFromString(code)
 	if err != nil {
 		return err
@@ -69,16 +72,16 @@ func (p *Python) RunSimpleString(code string) error {
 	return nil
 }
 
-func (p *Python) GILStateEnsure() (GILState, error) {
+func (p *Python) gilStateEnsure() (gilState, error) {
 	r1, _, e1 := syscall.SyscallN(p.procGILStateEnsure)
 	if r1 == 0 {
 		return 0, fmt.Errorf("could not ensure GIL state: %w", e1)
 	}
 
-	return GILState(r1), nil
+	return gilState(r1), nil
 }
 
-func (p *Python) GILStateRelease(state GILState) error {
+func (p *Python) gilStateRelease(state gilState) error {
 	_, _, e1 := syscall.SyscallN(p.procGILStateRelease, uintptr(state))
 	if e1 != 0 {
 		return fmt.Errorf("could not release GIL state: %w", e1)
