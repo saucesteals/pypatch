@@ -41,9 +41,7 @@ if __name__ == "__main__":
 
 <img src="./assets/program.png" alt="logo" height="100px" />
 
----
-
-### `inject.py` with pypatch executor
+### Injecting `inject.py` with pypatch executor before startup
 
 ```py
 import os
