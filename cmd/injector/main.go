@@ -14,7 +14,7 @@ import (
 
 var (
 	program = "program.exe"
-	dll     = "pypatch.dll"
+	dll     = "patch.dll"
 )
 
 func openProgram() (*exec.Cmd, windows.Handle, error) {
